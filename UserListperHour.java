@@ -20,7 +20,7 @@ public class UserListperHour
      * 		This method finds the top n users who have tweeted the most for every hour
 	 *		Write the ouput in the file "maxTweetperHour.txt"
      */
-    public void maxTweetperHour(List<String> txt)  {
+    public void maxTweetperHour(List<String> txt, int n)  {
 		try {                          
 			String name = "";     
         	String hour = "";       
@@ -59,13 +59,13 @@ public class UserListperHour
              		counts.add(users.get(key)); 
              		Collections.sort(counts,Collections.reverseOrder());      
         		}         
-				writer.write("\r\nTop 10 users who tweeted the most for "+hours.get(x)+"\r\n");
+				writer.write("\r\nTop "+n+ " users who tweeted the most for "+hours.get(x)+"\r\n");
 				
         		List<String> list = new ArrayList<String>();
-				for (int i=0; i<10; i++){
+				for (int i=0; i<n; i++){
 					for (String key : users.keySet()) {                   
                   		if ((users.get(key))== counts.get(i)){
-							if (list.size()>9) 
+							if (list.size()>n-1) 
 								break;               
 							if (!list.contains(key))                    			
 								list.add(key);							                   

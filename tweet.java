@@ -67,7 +67,7 @@ public class tweet
             }                
     }
 
-    public void maxRetweet(){
+    public void maxRetweet(int n){
         
          try {
             FileWriter writer = new FileWriter("maxRetweet.txt", true);        
@@ -77,11 +77,11 @@ public class tweet
                 Collections.sort(retweetCount,Collections.reverseOrder());
             }
             List<String> list = new ArrayList<String>();
-            writer.write("Top 10 tweets have the most retweet\r\n");  
-            for (int i=0; i<10; i++){                          
+            writer.write("Top"+ n+" tweets have the most retweet\r\n");  
+            for (int i=0; i<n; i++){                          
                 for (String key : tweetList.keySet()) {                   
                     if ((tweetList.get(key)).getRetweet()== retweetCount.get(i)){   
-                        if (list.size()>9) 
+                        if (list.size()>n-1) 
 							break;    
 						if (!list.contains(key))                    			
 							list.add(key);	  

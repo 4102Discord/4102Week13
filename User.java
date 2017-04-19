@@ -77,7 +77,7 @@ public class User
      *  This method finds the top n users who have tweeted the most related to the search string for the entire timeline 
  	 *	Write the ouput in the file "maxTweets.txt"
      */
-    public void maxTweets(){
+    public void maxTweets(int n){
 	try {
             FileWriter writer = new FileWriter("maxTweets.txt", true);        
             List<Integer> retweetCount = new ArrayList<Integer>();        
@@ -87,12 +87,12 @@ public class User
              	Collections.sort(counts, Collections.reverseOrder() );      
        		}         
         
-       		writer.write("\nTop 10 users tweeted the most\r\n");           
+       		writer.write("\nTop "+n+" users tweeted the most\r\n");           
         	List<String> list = new ArrayList<String>();     
-            for (int i=0; i<10; i++){                   
+            for (int i=0; i<n; i++){                   
                 for (String key : userList.keySet()) {                   
                   	if ((userList.get(key)).getCount()== counts.get(i)){    
-						if (list.size()>9) 
+						if (list.size()>n-1) 
 							break;    
 					if (!list.contains(key))                    			
 						list.add(key);                   			     
@@ -114,7 +114,7 @@ public class User
      * This method finds the top n users who have the maximum followers
  	 * Write the ouput in the file "maxFollowers.txt"
      */
-    public void maxFollowers(){
+    public void maxFollowers(int n){
 	try {
             FileWriter writer = new FileWriter("maxFollowers.txt", true);        
             List<Integer> followers= new ArrayList<Integer>();
@@ -123,11 +123,11 @@ public class User
             	 followers.add(userList.get(key).getFollower()); 
              	Collections.sort(followers, Collections.reverseOrder());      
 	        }                 
-			writer.write("Top 10 users have the most followers\r\n");  	
-  			 for (int i=0; i<10; i++){                   
+			writer.write("Top "+n+" users have the most followers\r\n");  	
+  			 for (int i=0; i<n; i++){                   
                 	for (String key : userList.keySet()) {                   
                   		if ((userList.get(key)).getFollower()== followers.get(i)){    
-							if (list1.size()>9) 
+							if (list1.size()>n-1) 
 								break;    
 							if (!list1.contains(key))                    			
 								list1.add(key);	                     			     

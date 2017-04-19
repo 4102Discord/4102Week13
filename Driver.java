@@ -30,18 +30,20 @@ public class Driver{
         catch (Exception e){//Catch exception if any
             System.err.println("Error: " + e.getMessage());
       }      
-       
+        System.out.println("Enter the number of record to be displayed: ");
+		Scanner scanner = new Scanner(System. in); 
+		int n = scanner.nextInt();
 	  	tweet t = new tweet(txt); 
       	t.getTweetData();
-	  	t.maxRetweet();
+	  	t.maxRetweet(n);
 	  
      	User u = new User(txt);
       	u.getData();
-      	u.maxTweets();
-	  	u.maxFollowers();
+      	u.maxTweets(n);
+	  	u.maxFollowers(n);
 	  
 	  	UserListperHour h = new UserListperHour();
-	  	h.maxTweetperHour(txt);
+	  	h.maxTweetperHour(txt,n);
 	  
    
 	}
