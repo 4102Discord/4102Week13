@@ -3,10 +3,10 @@
 This is a java program that uses data pulled from Twitter of a specific search string within a period of time,
 to perform the following tasks:
 
-	i)	The top n users who have tweeted the most related to the search string for the entire timeline 
-	ii)	The top n users who have tweeted the most for every hour
-	iii)The top n users who have the maximum followers
-	iv)	The top n tweets which have the maximum retweet count
+	i)    The top n users who have tweeted the most related to the search string for the entire timeline 
+	ii)	  The top n users who have tweeted the most for every hour
+	iii)  The top n users who have the maximum followers
+	iv)	  The top n tweets which have the maximum retweet count
 
 Note: The data pulled from twitter including: user name, number of followers, the content of the tweet, 
 date of time the tweet was made and the number of retweets.
