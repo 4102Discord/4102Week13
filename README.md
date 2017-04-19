@@ -1,4 +1,4 @@
-# ITCS 4102 _ Extra Credit Acivity
+# ITCS 4102 _ Extra Credit Activity
 
 This is a java program that uses data pulled from Twitter of a specific search string within a period of time,
 to perform the following tasks:
