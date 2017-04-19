@@ -2,22 +2,26 @@ import java.io.*;
 import java.util.*;
 
 /**
- * 
+ * Driver to test methods perform the following:
+ *	1)	The top n users who have tweeted the most related to the search string for the entire timeline 
+ *	Write the ouput in the file "maxTweets.txt"
+ *	2)	The top n users who have tweeted the most for every hour
+ *		Write the ouput in the file "maxTweetperHour.txt"
+ *  3)	The top n users who have the maximum followers
+ *		Write the ouput in the file "maxFollowers.txt"
+ *  4)	The top n tweets which have the maximum retweet count
+ *		Write the ouput in the file "maxRetweets.txt"
  */
-public class Driver{    
-    
-   public static List<String> txt= new ArrayList<String>();    
-   
+public class Driver{       
+   	public static List<String> txt= new ArrayList<String>();  
     public static void main(String [] args)throws IOException {
-     		
-      try{
-            //read the entire text into an arrayList
+     	List<String> postHour= new ArrayList<String>();		
+      	try{
             FileInputStream fstream = new FileInputStream("noodle.txt");
             DataInputStream in = new DataInputStream(fstream);
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String strLine;             
-            
-            //replace " with space
+            //read text line by line and replace " with space
             while ((strLine = br.readLine()) != null)   {                
                 txt.add(strLine.replace("\""," ").trim());           
             }       
@@ -27,15 +31,18 @@ public class Driver{
             System.err.println("Error: " + e.getMessage());
       }      
        
-	  tweet t = new tweet(txt); 
-      t.getTweetData();
-	  t.maxRetweet();
+	  	tweet t = new tweet(txt); 
+      	t.getTweetData();
+	  	t.maxRetweet();
 	  
-      User u = new User(txt,t);
-      u.getData();
-      u.findUserTweetedTheMost();
-	  u.findUserWithMaxFollower();
+     	User u = new User(txt);
+      	u.getData();
+      	u.maxTweets();
+	  	u.maxFollowers();
 	  
-   }
+	  	UserListperHour h = new UserListperHour();
+	  	h.maxTweetperHour(txt);
+	  
    
+	}
 }

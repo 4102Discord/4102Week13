@@ -3,13 +3,16 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Collections;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.*;
 /**
  * 
  */
 public class tweet
 {
-    private String tweetContent;
-    private String date;
+    private String tweetContent;    
     private int retweet;
     HashMap <String, tweet> tweetList = new HashMap<String, tweet>();  
     List<String> txt= new ArrayList<String>();
@@ -19,8 +22,7 @@ public class tweet
      */
     public tweet(List<String> text)
     {
-        txt = text;
-        this.date = date;
+        txt = text;        
         this.retweet = retweet;        
     }
 
@@ -32,30 +34,15 @@ public class tweet
         this.retweet = Integer.parseInt(c);
     }
     
-    public String getDate (){
-        return this.date;
-    }
-    
-     public void setDate (String c){
-        this.date = c;
-    }
-    
      public void setTweetContent (String c){
         this.tweetContent = c;
     }
     
      public String getTweetContent (){
         return this.tweetContent;
-    }
-    
-     public String toString(){
-        return("       Retweet  "+this.retweet +" Date  "+ this.date);
-       }   
-             
-     /**
-     * 
-     */
-    public void getTweetData()
+    }    
+        
+        public void getTweetData()
     {       
         String date = "";
         String tweetContent = "";        
@@ -66,52 +53,50 @@ public class tweet
             for (int j = 0; j < txt.size(); j++){  
                 Matcher matcher = pattern.matcher(txt.get(j));
                 if(matcher.find()) {    
-                    tweet t = new tweet(txt);
-                    date = matcher.group().split("\\[")[1].split("\\]")[0].trim(); 
+                    tweet t = new tweet(txt);                  
     
                     arr = matcher.group().split("\\]\\s")[1].trim(); 
                     arr.replace("]"," ");
                     String [] arr1 = arr.split(" "); 
-                    tweetContent = arr.replace(arr1[arr1.length-2]+" "+arr1[arr1.length-1]," ").trim();
-                                                     
-                    rt = arr1[arr1.length-1];                              
-                    t.setDate(date);
+                    tweetContent = arr.replace(arr1[arr1.length-2]+" "+arr1[arr1.length-1]," ").trim();                                                     
+                    rt = arr1[arr1.length-1];             
+                   
                     t.setRetweet(rt);
                     tweetList.put(tweetContent,t);
                 }                     
-            }               
-           /*
-            for (String key :tweetList.keySet()) {                 
-                        
-                   System.out.printf("%-30s%-30s\n",key,tweetList.get(key));                   
-                
-            }
-              */  
+            }                
     }
 
     public void maxRetweet(){
-        List<Integer> retweetCount = new ArrayList<Integer>();
-        System.out.println("Max retweet");
-        for (String key: tweetList.keySet()){
-            retweetCount.add(tweetList.get(key).getRetweet());
-            Collections.sort(retweetCount);
-        }
-    
-        for (String key: tweetList.keySet())
-        {
-            if ((tweetList.get(key)).getRetweet()== retweetCount.get(retweetCount.size()-1)){                
-                   System.out.printf("%-120s%-30s\n",key,tweetList.get(key).getRetweet());                   
-            }
-
-            if ((tweetList.get(key)).getRetweet()== retweetCount.get(retweetCount.size()-2)){                
-                   System.out.printf("%-120s%-30s\n",key,tweetList.get(key).getRetweet());                   
-            }
-
-            if ((tweetList.get(key)).getRetweet()== retweetCount.get(retweetCount.size()-3)){                
-                   System.out.printf("%-120s%-30s\n",key,tweetList.get(key).getRetweet());                   
-            }
         
+         try {
+            FileWriter writer = new FileWriter("maxRetweet.txt", true);        
+            List<Integer> retweetCount = new ArrayList<Integer>();     
+            for (String key: tweetList.keySet()){
+                retweetCount.add(tweetList.get(key).getRetweet());
+                Collections.sort(retweetCount,Collections.reverseOrder());
+            }
+            List<String> list = new ArrayList<String>();
+            writer.write("Top 10 tweets have the most retweet\r\n");  
+            for (int i=0; i<10; i++){                          
+                for (String key : tweetList.keySet()) {                   
+                    if ((tweetList.get(key)).getRetweet()== retweetCount.get(i)){   
+                        if (list.size()>9) 
+							break;    
+						if (!list.contains(key))                    			
+							list.add(key);	  
+                     }            
+                    }   
+            }
+            
+            for (int i = 0; i < list.size(); i++) {					
+					writer.write(list.get(i)+"    Retweeted " +retweetCount.get(i)+" times\r\n"); 				
+			}
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-    }
+    }   
 }    
+
+
